@@ -3,10 +3,13 @@ name: Clone repository
 on: [push]
 
 jobs:
-  clone:
-  - name: Execute SSH commmands on remote server
-    uses: JimCronqvist/action-ssh@master
-    with:
-      hosts: ${{ secrets.USERNAME }}@${{ secrets.HOST }} 
-      privateKey: ${{ secrets.SSHKEY }}
-      command: ls -lah
+
+  runs-on: ubuntu-latest
+  
+  steps:
+    - name: Execute SSH commmands on remote server
+      uses: JimCronqvist/action-ssh@master
+      with:
+        hosts: ${{ secrets.USERNAME }}@${{ secrets.HOST }} 
+        privateKey: ${{ secrets.SSHKEY }}
+        command: ls -lah
