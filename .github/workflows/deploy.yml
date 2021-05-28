@@ -1,16 +1,18 @@
-name: Clone repository
+name: Command via SSH
 
-on: [push]
+on: push
 
 jobs:
-  deploy:
-
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Execute SSH commmands on remote server
-        uses: JimCronqvist/action-ssh@master
+      - name: ls -a via OPEN SSH Private Key
+        uses: garygrossgarten/github-action-ssh@release
         with:
-          hosts: ${{ secrets.USERNAME }}@${{ secrets.HOST }} 
-          privateKey: ${{ secrets.SSHKEY }}
-          command: ls -lah
+          command: ls -a
+          host: ${{ secrets.HOST }}
+          username: root
+          privateKey: ${{ secrets.SSHKEY}}
+        env:
+          CI: true
