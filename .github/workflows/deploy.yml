@@ -10,6 +10,6 @@ jobs:
       - name: Execute SSH commmands on remote server
         uses: JimCronqvist/action-ssh@master
         with:
-          hosts: 'root@64.227.2.82'
+          hosts: 'root@157.230.239.1'
           privateKey: ${{ secrets.SSHKEY }}
           command: ls -lah
