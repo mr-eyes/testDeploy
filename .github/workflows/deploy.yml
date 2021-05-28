@@ -1,31 +1,12 @@
-name: Deploy
+name: Clone repository
 
 on: [push]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-
-    - name: Copy file via scp
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-      with:
-        source: "."
-        target: "/root/fromGithub"
-
-    - name: Executing remote  command
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-        script: cat /root/fromGithub/README.md
+  clone:
+  - name: Execute SSH commmands on remote server
+    uses: JimCronqvist/action-ssh@master
+    with:
+      hosts: ${{ secrets.USERNAME }}@${{ secrets.HOST }} 
+      privateKey: ${{ secrets.SSHKEY }}
+      command: ls -lah
